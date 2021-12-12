@@ -12,13 +12,14 @@ def validation(word, symbols):
 
 
 # Decrypt by hash
-def brute_force(hash, symbols, repeat=0):
-    for sequence in itertools.product(symbols, repeat=repeat):
-        word_try = ''.join(sequence)
-        if hashlib.sha3_384(word_try.encode()).hexdigest() == hash:
-            return word_try
-
-    return brute_force(hash, symbols, repeat + 1)
+def brute_force(hash, symbols):
+    repeat = 0
+    while True:
+        for sequence in itertools.product(symbols, repeat=repeat):
+            word_try = ''.join(sequence)
+            if hashlib.sha3_384(word_try.encode()).hexdigest() == hash:
+                return word_try
+        repeat = repeat + 1
 
 
 if __name__ == '__main__':

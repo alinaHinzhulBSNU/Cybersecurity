@@ -17,13 +17,14 @@ def password_is_correct(application: win32.CDispatch, path: str, password: str):
 
 
 # Password brute forcing
-def password_brute_force(application: win32.CDispatch, path: str, symbols: list, repeat=1):
-    for sequence in itertools.product(symbols, repeat=repeat):
-        password_variant = ''.join(sequence)
-        if password_is_correct(application, path, password_variant):
-            return password_variant
-
-    return password_brute_force(application, path, symbols, repeat + 1)
+def password_brute_force(application: win32.CDispatch, path: str, symbols: list):
+    repeat = 1
+    while True:
+        for sequence in itertools.product(symbols, repeat=repeat):
+            password_variant = ''.join(sequence)
+            if password_is_correct(application, path, password_variant):
+                return password_variant
+        repeat = repeat + 1
 
 
 # Mask attack
